@@ -3,26 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class NetworkManager : MonoBehaviour, IPunObservable
+public class PlayerManager : MonoBehaviour
 {
 
-    public PhotonView photonView;
-
-    public GameManager gameManager;
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        
-    }
+    /*
 
     // Start is called before the first frame update
     void Start()
     {
         photonView = PhotonView.Get(this);
+
+        if (!photonView.IsMine)
+        {
+            GetComponentInChildren<Camera>().enabled = false;
+            GetComponent<AudioListener>().enabled = false;
+        }
+
     }
 
 
-    /*public void NotifySelectBoardPiece(GameObject gameObject)
+
+
+    public void NotifySelectBoardPiece(GameObject gameObject)
     {
         if((int)gameManager.currentActivePlayer.id == PhotonNetwork.LocalPlayer.ActorNumber) //allow the player to select a board item
             photonView.RPC("RPC_NotifySelectBoardPiece", RpcTarget.All, gameObject.name);

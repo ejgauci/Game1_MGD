@@ -12,7 +12,7 @@ public class CanvasManager : MonoBehaviour
     public Sprite fruitEmpty;*/
 
     public GameManager gameManager;
-    public NetworkManager networkManager;
+    //public NetworkManager networkManager;
 
 
     /*

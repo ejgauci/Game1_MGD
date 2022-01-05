@@ -55,6 +55,7 @@ public class Lobby : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         PhotonNetwork.JoinLobby(TypedLobby.Default);
+        AssignPlayerNumber(1);
     }
 
     public void OnClickCreateRoom()
@@ -99,6 +100,12 @@ public class Lobby : MonoBehaviourPunCallbacks
         availableRooms = roomList;
         UpdateRoomList();
 
+        if (roomList.Count > 0)
+        {
+            InputPlayerName.GetComponent<TMP_InputField>().text = "Player 2";
+            AssignPlayerNumber(2);
+        }
+
     }
 
     private void UpdateRoomList()
@@ -136,9 +143,20 @@ public class Lobby : MonoBehaviourPunCallbacks
         Status.GetComponent<TextMeshProUGUI>().text = "Status:" + PhotonNetwork.NetworkClientState.ToString();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void AssignPlayerNumber(int player)
     {
-        
+        if (PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey("Player"))
+        {
+            PhotonNetwork.LocalPlayer.CustomProperties["Player"] = player;
+        }
+        else
+        {
+            //setting player properties; Player 1 = 0, Player2 = 1
+            ExitGames.Client.Photon.Hashtable playerProps = new ExitGames.Client.Photon.Hashtable
+            {
+                {"Player", player}
+            };
+            PhotonNetwork.SetPlayerCustomProperties(playerProps);
+        }
     }
 }
