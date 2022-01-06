@@ -65,6 +65,8 @@ public class GameManager : MonoBehaviourPun
 
         ChangeTopNames();
 
+        canvasManager.UpdatePointsP1(0);
+        canvasManager.UpdatePointsP2(0);
         //ChangeActivePlayer();
     }
 

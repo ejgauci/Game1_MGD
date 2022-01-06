@@ -6,8 +6,7 @@ using Photon.Pun;
 public class PlayerManager : MonoBehaviour
 {
    
-    //public int points =0;
-    public int coin = 0;
+    public int points = 0;
 
 
     public CanvasManager canvasManager;
@@ -28,24 +27,26 @@ public class PlayerManager : MonoBehaviour
     {
         canvasManager = GameObject.FindWithTag("Canvas").GetComponent<CanvasManager>();
         playerTag = gameObject.tag;
+
+ 
     }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.transform.tag=="Coin")
         {
-            coin++;
+            points++;
             Destroy(col.gameObject);
 
             if (playerTag == "Player1")
             {
-                canvasManager.UpdateCoinP1(coin);
-                print("player 1 got a coin " + coin);
+                canvasManager.UpdatePointsP1(points);
+                print("player 1 got a coin " + points);
             }
             else
             {
-                canvasManager.UpdateCoinP2(coin);
-                print("player 2 got a coin "+ coin);
+                canvasManager.UpdatePointsP2(points);
+                print("player 2 got a coin "+ points);
             }
 
         }
