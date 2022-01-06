@@ -18,9 +18,13 @@ public class CanvasManager : MonoBehaviour
         transform.Find("Player2Label").GetComponent<TextMeshProUGUI>().text = player2Name;
     }
 
-    public void UpdateCoins()
+    public void UpdateCoinP1(int coinsP1)
     {
-
+        transform.Find("Player1Coins").GetComponent<TextMeshProUGUI>().text = coinsP1.ToString();
+    }
+    public void UpdateCoinP2(int coinsP1)
+    {
+        transform.Find("Player2Coins").GetComponent<TextMeshProUGUI>().text = coinsP1.ToString();
     }
 
     // Update is called once per frame
