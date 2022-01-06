@@ -5,10 +5,9 @@ using Photon.Pun;
 
 public class PlayerManager : MonoBehaviour
 {
-   
+    
+
     public int points = 0;
-
-
     public CanvasManager canvasManager;
 
     PhotonView photonView;
@@ -16,11 +15,22 @@ public class PlayerManager : MonoBehaviour
 
     public string playerTag;
 
+    private SpriteRenderer spriteRenderer;
+    private PlayerMovement playerMovement;
+
+    private Vector3 SpawnPoint1 = new Vector3(50.75f, 1.5f, 0);
+    
+
 
     void Start()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        playerMovement = GetComponent<PlayerMovement>();
+
         photonView = PhotonView.Get(this);
         player = (int)PhotonNetwork.LocalPlayer.CustomProperties["Player"];
+
+        
     }
 
     void Awake()
@@ -50,10 +60,30 @@ public class PlayerManager : MonoBehaviour
             }
 
         }
-        
+
+        if (col.transform.tag == "DangerZone")
+        {
+
+            StartCoroutine(DangerZone());
+        }
+
+
     }
-    
-    
+
+    IEnumerator DangerZone()
+    {
+        spriteRenderer.enabled = false;
+        playerMovement.enabled = false;
+
+        transform.position = SpawnPoint1;
+
+        yield return new WaitForSeconds(2);
+
+        spriteRenderer.enabled = true;
+        playerMovement.enabled = true;
+    }
+
+
 
 
 

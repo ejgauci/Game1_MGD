@@ -317,7 +317,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 916208fdad470074db31194d0c110325, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coin: 0
+  points: 0
   canvasManager: {fileID: 0}
   playerTag: 
 --- !u!1001 &2354659241616671701
