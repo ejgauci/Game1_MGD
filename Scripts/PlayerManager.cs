@@ -5,35 +5,28 @@ using Photon.Pun;
 
 public class PlayerManager : MonoBehaviour
 {
+   
+    //public int points =0;
+    public float coin = 0;
 
-    /*
 
-    // Start is called before the first frame update
-    void Start()
+
+    
+    private void OnTriggerEnter2D(Collider2D col)
     {
-        photonView = PhotonView.Get(this);
-
-        if (!photonView.IsMine)
+        if (col.transform.tag=="Coin")
         {
-            GetComponentInChildren<Camera>().enabled = false;
-            GetComponent<AudioListener>().enabled = false;
+            coin++;
+            Destroy(col.gameObject);
+
         }
-
+        
     }
+    
+    
 
 
 
 
-    public void NotifySelectBoardPiece(GameObject gameObject)
-    {
-        if((int)gameManager.currentActivePlayer.id == PhotonNetwork.LocalPlayer.ActorNumber) //allow the player to select a board item
-            photonView.RPC("RPC_NotifySelectBoardPiece", RpcTarget.All, gameObject.name);
-    }*/
-
-    /*[PunRPC]
-    public void RPC_NotifySelectBoardPiece(string gameObjectName)
-    {
-        GetComponent<GameManager>().SelectBoardPiece(GameObject.Find(gameObjectName));
-    }*/
 
 }

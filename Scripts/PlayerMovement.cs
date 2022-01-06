@@ -25,13 +25,6 @@ public class PlayerMovement : MonoBehaviour, IPunObservable {
     {
         photonView = PhotonView.Get(this);
 
-        /*
-        if (!photonView.IsMine)
-        {
-            GetComponentInChildren<Camera>().enabled = false;
-            GetComponent<AudioListener>().enabled = false;
-        }
-        */
 
     }
 
