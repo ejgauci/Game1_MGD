@@ -8,6 +8,7 @@ public class PlayerManager : MonoBehaviour
     
 
     public int points = 0;
+    public int lives = 3;
     public CanvasManager canvasManager;
 
     PhotonView photonView;
@@ -19,7 +20,9 @@ public class PlayerManager : MonoBehaviour
     private PlayerMovement playerMovement;
 
     private Vector3 SpawnPoint1 = new Vector3(50.75f, 1.5f, 0);
-    
+    private Vector3 SpawnPoint2 = new Vector3(-11f, -0.8f, 0);
+
+
 
 
     void Start()
@@ -64,23 +67,58 @@ public class PlayerManager : MonoBehaviour
         if (col.transform.tag == "DangerZone")
         {
 
-            StartCoroutine(DangerZone());
+            StartCoroutine(DangerZone(SpawnPoint1));
+
+        }
+
+        if (col.transform.tag == "DangerZone2")
+        {
+            StartCoroutine(DangerZone(SpawnPoint2));
+
         }
 
 
     }
 
-    IEnumerator DangerZone()
+    IEnumerator DangerZone(Vector3 spoint)
     {
-        spriteRenderer.enabled = false;
-        playerMovement.enabled = false;
 
-        transform.position = SpawnPoint1;
+        lives--;
 
-        yield return new WaitForSeconds(2);
+        if (lives > 0)
+        {
+            
+            if (playerTag == "Player1")
+            {
+                canvasManager.UpdateLivesP1(lives);
+                print("player 1 got " + lives + " lives");
+            }
+            else
+            {
+                canvasManager.UpdateLivesP2(lives);
+                print("player 2 got " + lives + " lives");
+            }
 
-        spriteRenderer.enabled = true;
-        playerMovement.enabled = true;
+            spriteRenderer.enabled = false;
+            playerMovement.enabled = false;
+
+            transform.position = spoint;
+
+            yield return new WaitForSeconds(2);
+
+            spriteRenderer.enabled = true;
+            playerMovement.enabled = true;
+        }
+        else
+        {
+            canvasManager.UpdateLivesP1(lives);
+            print("player died");
+
+            yield return null;
+        }
+
+
+        
     }
 
 

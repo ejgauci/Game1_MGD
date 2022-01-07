@@ -30,7 +30,17 @@ public class CanvasManager : MonoBehaviour
         transform.Find("Player2Points").GetComponent<TextMeshProUGUI>().text = pointsP2.ToString();
     }
 
-    
+
+    public void UpdateLivesP1(int livesP1)
+    {
+        transform.Find("Player1Lives").GetComponent<TextMeshProUGUI>().text = livesP1.ToString();
+    }
+    public void UpdateLivesP2(int livesP2)
+    {
+        transform.Find("Player2Lives").GetComponent<TextMeshProUGUI>().text = livesP2.ToString();
+    }
+
+
     void Start()
     {
         StartCoroutine(CountdownToStart());
