@@ -247,6 +247,7 @@ MonoBehaviour:
   runSpeed: 40
   photonView: {fileID: 0}
   fixedJoystick: {fileID: 0}
+  jumpButton: {fileID: 0}
 --- !u!95 &9192352414506585994
 Animator:
   serializedVersion: 3

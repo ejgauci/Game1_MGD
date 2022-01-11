@@ -9,6 +9,7 @@ public class PlayerManager : MonoBehaviour
 
     public int points = 0;
     public int lives = 3;
+    public bool tookGEM = false;
     public CanvasManager canvasManager;
 
     PhotonView photonView;
@@ -95,6 +96,24 @@ public class PlayerManager : MonoBehaviour
 
         }
 
+        if (col.transform.tag == "Gem" && !tookGEM)
+        {
+            points = points+5;
+
+            tookGEM = true;
+
+            if (playerTag == "Player1")
+            {
+                canvasManager.UpdatePointsP1(points);
+                print("player 1 got a gem " + points);
+            }
+            else
+            {
+                canvasManager.UpdatePointsP2(points);
+                print("player 2 got a gem " + points);
+            }
+
+        }
 
     }
 
