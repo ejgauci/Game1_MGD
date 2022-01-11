@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Photon.Pun;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour, IPunObservable {
 
@@ -22,6 +24,7 @@ public class PlayerMovement : MonoBehaviour, IPunObservable {
 
     Rigidbody2D body;
     public FixedJoystick fixedJoystick;
+    public Button jumpButton;
 
 
     void Start()
@@ -39,6 +42,8 @@ public class PlayerMovement : MonoBehaviour, IPunObservable {
         {
             body = GetComponent<Rigidbody2D>();
             fixedJoystick = GameObject.FindWithTag("Joystick").GetComponent<FixedJoystick>();
+            jumpButton = GameObject.FindWithTag("jumpButton").GetComponent<Button>();
+            jumpButton.onClick.AddListener(Jump);
         }
 
 
@@ -71,13 +76,18 @@ public class PlayerMovement : MonoBehaviour, IPunObservable {
 
             if (Input.GetButtonDown("Jump"))
             {
-                jump = true;
-                animator.SetBool("isJumping", true);
+                Jump();
             }
         }
 		
 
 	}
+
+    public void Jump()
+    {
+        jump = true;
+        animator.SetBool("isJumping", true);
+    }
 
 	public void OnLanding ()
 	{
