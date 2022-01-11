@@ -330,6 +330,7 @@ MonoBehaviour:
   animator: {fileID: 9192352414506585994}
   runSpeed: 40
   photonView: {fileID: 0}
+  fixedJoystick: {fileID: 0}
 --- !u!95 &9192352414506585994
 Animator:
   serializedVersion: 3
@@ -402,6 +403,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   points: 0
+  lives: 3
   canvasManager: {fileID: 0}
   playerTag: 
 --- !u!1 &9192352414637857897

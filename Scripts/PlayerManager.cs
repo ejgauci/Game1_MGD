@@ -64,6 +64,24 @@ public class PlayerManager : MonoBehaviour
 
         }
 
+        if (col.transform.tag == "Spike")
+        {
+
+            lives--;
+
+            if (playerTag == "Player1")
+            {
+                canvasManager.UpdateLivesP1(lives);
+                print("player 1 hit spike " + points);
+            }
+            else
+            {
+                canvasManager.UpdateLivesP2(lives);
+                print("player 2 hit spike " + points);
+            }
+
+        }
+
         if (col.transform.tag == "DangerZone")
         {
 
