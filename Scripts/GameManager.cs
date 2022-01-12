@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Photon.Pun;
 
 public class GameManager : MonoBehaviourPun
@@ -20,7 +22,18 @@ public class GameManager : MonoBehaviourPun
 
     private int player = 0;
 
+    public String p1Name = "";
+    public String p2Name = "";
 
+    public int p1Points = 0;
+    public int p2Points = 0;
+
+    public int p1Lives = 3;
+    public int p2Lives = 3;
+
+
+
+    private Scene scene;
 
     // Start is called before the first frame update
     void Start()
@@ -29,11 +42,6 @@ public class GameManager : MonoBehaviourPun
         photonView = PhotonView.Get(this);
         player = (int)PhotonNetwork.LocalPlayer.CustomProperties["Player"];
 
-
-        //--temp code
-        //players.Add(new Player() { id = Player.Id.Player1, nickname = "P1", assignedFruit = Fruit.FruitType.Apple });
-        //players.Add(new Player() { id = Player.Id.Player2, nickname = "P2", assignedFruit = Fruit.FruitType.Strawberry });
-        //-end temp code
 
         Photon.Realtime.Player[] allPlayers = PhotonNetwork.PlayerList;
         foreach(Photon.Realtime.Player player in allPlayers)
@@ -65,10 +73,23 @@ public class GameManager : MonoBehaviourPun
 
         ChangeTopNames();
 
+        
+        //DontDestroyOnLoad(gameObject);
+
         //canvasManager.UpdatePointsP1(0);
         //canvasManager.UpdatePointsP2(0);
         //ChangeActivePlayer();
     }
+
+    void Update()
+    {
+
+        if (p1Lives == 0||p2Lives==0)
+        {
+            GameEnded();
+        }
+    }
+
 
     private void ChangeTopNames()
     {
@@ -97,5 +118,77 @@ public class GameManager : MonoBehaviourPun
             p1Camera.SetActive(false);
         }
         
+    }
+
+
+    public void GameEnded()
+    {
+        scene = SceneManager.GetActiveScene();
+
+        if (scene.name != "WinScene")
+        {
+            SceneManager.LoadScene("WinScene");
+        }
+        else
+        {
+                 if (p1Points > p2Points)
+             {
+                 WonPlayer(1);
+             }
+             else
+             {
+                 WonPlayer(2);
+             }
+
+        }
+
+    }
+
+    public void WonPlayer(int player)
+    {
+        print("Player "+ player+ " won");
+        
+    }
+
+
+
+    public void setP1Points(int points)
+    {
+        p1Points = points;
+    }
+    public void setP2Points(int points)
+    {
+        p2Points = points;
+    }
+
+    public int getP1Points()
+    {
+        return p1Points;
+    }
+
+    public int getP2Points()
+    {
+        return p2Points;
+    }
+
+
+
+    public void setP1Lives(int lives)
+    {
+        p1Lives = lives;
+    }
+    public void setP2Lives(int lives)
+    {
+        p2Lives = lives;
+    }
+
+    public int getP1Lives()
+    {
+        return p1Lives;
+    }
+
+    public int getP2Lives()
+    {
+        return p2Lives;
     }
 }

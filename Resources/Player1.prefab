@@ -321,6 +321,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   points: 0
   lives: 3
+  tookGEM: 0
   canvasManager: {fileID: 0}
   playerTag: 
 --- !u!1001 &2354659241616671701

@@ -83,6 +83,26 @@ public class PlayerManager : MonoBehaviour
 
         }
 
+        if (col.transform.tag == "Enemy")
+        {
+
+            lives--;
+
+            if (playerTag == "Player1")
+            {
+                canvasManager.UpdateLivesP1(lives);
+                print("player 1 hit enemy " + points);
+            }
+            else
+            {
+                canvasManager.UpdateLivesP2(lives);
+                print("player 2 hit enemy " + points);
+            }
+
+        }
+
+
+
         if (col.transform.tag == "DangerZone")
         {
 

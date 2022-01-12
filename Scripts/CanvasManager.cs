@@ -24,20 +24,24 @@ public class CanvasManager : MonoBehaviour
     public void UpdatePointsP1(int pointsP1)
     {
         transform.Find("Player1Points").GetComponent<TextMeshProUGUI>().text = pointsP1.ToString();
+        gameManager.setP1Points(pointsP1);
     }
     public void UpdatePointsP2(int pointsP2)
     {
         transform.Find("Player2Points").GetComponent<TextMeshProUGUI>().text = pointsP2.ToString();
+        gameManager.setP1Points(pointsP2);
     }
 
 
     public void UpdateLivesP1(int livesP1)
     {
         transform.Find("Player1Lives").GetComponent<TextMeshProUGUI>().text = livesP1.ToString();
+        gameManager.setP1Lives(livesP1);
     }
     public void UpdateLivesP2(int livesP2)
     {
         transform.Find("Player2Lives").GetComponent<TextMeshProUGUI>().text = livesP2.ToString();
+        gameManager.setP2Lives(livesP2);
     }
 
 
@@ -46,6 +50,11 @@ public class CanvasManager : MonoBehaviour
         StartCoroutine(CountdownToStart());
     }
 
+
+    void Update()
+    {
+
+    }
 
     IEnumerator CountdownToStart()
     {
@@ -57,6 +66,7 @@ public class CanvasManager : MonoBehaviour
         }
 
         transform.Find("CountdownTimer").GetComponent<TextMeshProUGUI>().text = "GAME OVER";
+        gameManager.GameEnded();
     }
 
     static string formatTime(int secs)

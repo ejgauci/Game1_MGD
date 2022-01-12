@@ -22,7 +22,6 @@ public class PlayerMovement : MonoBehaviour, IPunObservable {
     private Vector3 playerPos;
 
 
-    Rigidbody2D body;
     public FixedJoystick fixedJoystick;
     public Button jumpButton;
 
@@ -31,16 +30,8 @@ public class PlayerMovement : MonoBehaviour, IPunObservable {
     {
         photonView = PhotonView.Get(this);
 
-        if (!photonView.IsMine)
+        if (photonView.IsMine)
         {
-            //if player object (box) is not mine, then it should automatically be controlled by photon data
-
-            //therefore destroy rigidbody
-            Destroy(GetComponent<Rigidbody2D>());
-        }
-        else
-        {
-            body = GetComponent<Rigidbody2D>();
             fixedJoystick = GameObject.FindWithTag("Joystick").GetComponent<FixedJoystick>();
             jumpButton = GameObject.FindWithTag("jumpButton").GetComponent<Button>();
             jumpButton.onClick.AddListener(Jump);
