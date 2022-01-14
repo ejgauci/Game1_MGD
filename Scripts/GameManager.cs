@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
+using TMPro;
 
 public class GameManager : MonoBehaviourPun
 {
@@ -69,32 +70,92 @@ public class GameManager : MonoBehaviourPun
 
         }
 
-        StartCoroutine(removeOtherPlayerCam());
 
-        ChangeTopNames();
 
         
-        //DontDestroyOnLoad(gameObject);
+
+        if (scene.name != "WinScene")
+        {
+            StartCoroutine(removeOtherPlayerCam());
+            ChangeTopNames();
+        }
+        else
+        {
+            canvasManager = GameObject.FindWithTag("Canvas").GetComponent<CanvasManager>();
+            SetWinScene();
+        }
+
+
+        
+
+        
+        DontDestroyOnLoad(gameObject);
 
         //canvasManager.UpdatePointsP1(0);
         //canvasManager.UpdatePointsP2(0);
         //ChangeActivePlayer();
     }
 
+
+    void Awake()
+    {
+        if (scene.name == "WinScene")
+        {
+            //canvasManager = GameObject.FindWithTag("Canvas").GetComponent<CanvasManager>();
+            
+            
+        }
+    }
+
+    private void SetWinScene()
+    {
+        
+        /*
+        //canvasManager.ChangeTopNames(p1Name, p2Name);
+        GameObject.Find("Player1Label").GetComponent<TextMeshProUGUI>().text = p1Name;
+        GameObject.Find("Player2Label").GetComponent<TextMeshProUGUI>().text = p2Name;
+
+        //canvasManager.UpdatePointsP1(p1Points);
+        GameObject.Find("Player1Points").GetComponent<TextMeshProUGUI>().text = p1Points.ToString();
+
+        //canvasManager.UpdatePointsP2(p2Points);
+        GameObject.Find("Player2Points").GetComponent<TextMeshProUGUI>().text = p2Points.ToString();
+
+        //canvasManager.UpdateLivesP1(p1Lives);
+        GameObject.Find("Player1Lives").GetComponent<TextMeshProUGUI>().text = p1Lives.ToString();
+
+        //canvasManager.UpdatePointsP2(p2Lives);
+        GameObject.Find("Player2Lives").GetComponent<TextMeshProUGUI>().text = p2Lives.ToString();
+
+        */
+
+        GameEnded();
+    }
+
     void Update()
     {
-
-        if (p1Lives == 0||p2Lives==0)
+        if (scene.name != "WinScene")
         {
-            GameEnded();
+            if (p1Lives == 0 || p2Lives == 0)
+            {
+                GameEnded();
+            }
         }
+        else
+        {
+            print("xi hadd rebah");
+            SetWinScene();
+        }
+        
     }
 
 
     private void ChangeTopNames()
     {
-        canvasManager.ChangeTopNames(players.Find(x => x.id == Player.Id.Player1).nickname,
-            players.Find(x => x.id == Player.Id.Player2).nickname);
+        p1Name = players.Find(x => x.id == Player.Id.Player1).nickname;
+        p2Name = players.Find(x => x.id == Player.Id.Player2).nickname;
+
+        canvasManager.ChangeTopNames(p1Name,p2Name);
 
         
     }
@@ -131,7 +192,7 @@ public class GameManager : MonoBehaviourPun
         }
         else
         {
-                 if (p1Points > p2Points)
+            if (p1Points > p2Points)
              {
                  WonPlayer(1);
              }
@@ -147,7 +208,22 @@ public class GameManager : MonoBehaviourPun
     public void WonPlayer(int player)
     {
         print("Player "+ player+ " won");
-        
+
+        String winnerName = "";
+
+        if (player == 1)
+        {
+            winnerName = p1Name;
+        }
+        else
+        {
+            winnerName = p2Name;
+        }
+
+        //GameObject.Find("Winner").GetComponent<TextMeshProUGUI>().text = winnerName;
+        GameObject.FindWithTag("WinnerName").GetComponent<TextMeshProUGUI>().text = winnerName;
+
+
     }
 
 

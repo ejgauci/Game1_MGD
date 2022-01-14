@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CanvasManager : MonoBehaviour
@@ -10,9 +11,9 @@ public class CanvasManager : MonoBehaviour
 
     public int seconds = 20;
     public GameManager gameManager;
-    
 
 
+    private Scene scene;
 
 
     public void ChangeTopNames(string player1Name, string player2Name)
@@ -47,7 +48,16 @@ public class CanvasManager : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(CountdownToStart());
+        if (scene.name != "WinScene")
+        {
+            StartCoroutine(CountdownToStart());
+        }
+        else
+        {
+        }
+
+        
+        //DontDestroyOnLoad(gameObject);
     }
 
 
@@ -58,15 +68,25 @@ public class CanvasManager : MonoBehaviour
 
     IEnumerator CountdownToStart()
     {
-        while (seconds > 0)
+
+        if (scene.name != "WinScene")
         {
-            transform.Find("CountdownTimer").GetComponent<TextMeshProUGUI>().text = formatTime(seconds);
-            yield return new WaitForSeconds(1f);
-            seconds--;
+            while (seconds > 0)
+            {
+                transform.Find("CountdownTimer").GetComponent<TextMeshProUGUI>().text = formatTime(seconds);
+                yield return new WaitForSeconds(1f);
+                seconds--;
+            }
+
+            transform.Find("CountdownTimer").GetComponent<TextMeshProUGUI>().text = "GAME OVER";
+            gameManager.GameEnded();
+        }
+        else
+        {
         }
 
-        transform.Find("CountdownTimer").GetComponent<TextMeshProUGUI>().text = "GAME OVER";
-        gameManager.GameEnded();
+
+        
     }
 
     static string formatTime(int secs)
